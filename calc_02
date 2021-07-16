@@ -1,0 +1,138 @@
+from tkinter import *
+from tkinter import messagebox
+class ZachowanieError(Exception):
+    pass
+class ZlaOcenaError(Exception):
+    pass
+class Program(object):
+    def __init__(self):
+        self.okno = Tk()
+        self.okno.geometry("120x200")
+        self.okno.title("Kalkulator")
+        self.utworzwidgety()
+        self.okno.mainloop()
+    def utworzwidgety(self):
+        self.przycisk1=Button(self.okno,width = 2,height=2)
+        self.przycisk1["text"] = "9"
+        self.przycisk1.grid(row=1,column=0,sticky=W)
+        self.przycisk1["command"]=lambda: self.Zanotuj(9)
+        
+        self.przycisk2=Button(self.okno,width = 2,height=2)
+        self.przycisk2["text"] = "8"
+        self.przycisk2.grid(row=1,column=1,sticky=W)
+        self.przycisk2["command"]=lambda: self.Zanotuj(8)
+       
+        self.przycisk3=Button(self.okno,width = 2,height=2)
+        self.przycisk3["text"] = "7"
+        self.przycisk3.grid(row=1,column=2,sticky=W)
+        self.przycisk3["command"]=lambda: self.Zanotuj(7)
+        
+        self.przycisk4=Button(self.okno,width = 2,height=2)
+        self.przycisk4["text"] = "6"
+        self.przycisk4.grid(row=2,column=0,sticky=W)
+        self.przycisk4["command"]=lambda: self.Zanotuj(6)
+        
+        self.przycisk5=Button(self.okno,width = 2,height=2)
+        self.przycisk5["text"] = "5"
+        self.przycisk5.grid(row=2,column=1,sticky=W)
+        self.przycisk5["command"]=lambda: self.Zanotuj(5)
+        
+        self.przycisk6=Button(self.okno,width = 2,height=2)
+        self.przycisk6["text"] = "4"
+        self.przycisk6.grid(row=2,column=2,sticky=W)
+        self.przycisk6["command"]=lambda: self.Zanotuj(4)
+        
+        self.przycisk6=Button(self.okno,width = 2,height=2)
+        self.przycisk6["text"] = "3"
+        self.przycisk6.grid(row=3,column=0,sticky=W)
+        self.przycisk6["command"]=lambda: self.Zanotuj(3)
+        
+        self.przycisk7=Button(self.okno,width = 2,height=2)
+        self.przycisk7["text"] = "2"
+        self.przycisk7.grid(row=3,column=1,sticky=W)
+        self.przycisk7["command"]=lambda: self.Zanotuj(2)
+        
+        self.przycisk8=Button(self.okno,width = 2,height=2)
+        self.przycisk8["text"] = "1"
+        self.przycisk8.grid(row=3,column=2,sticky=W)
+        self.przycisk8["command"]=lambda: self.Zanotuj(1)
+        
+        self.przycisk9=Button(self.okno,width = 2,height=2)
+        self.przycisk9["text"] = "0"
+        self.przycisk9.grid(row=4,column=1,sticky=W)
+        self.przycisk9["command"]=lambda: self.Zanotuj(0)
+
+        self.przycisk10=Button(self.okno,width = 6,height=5)
+        self.przycisk10["text"] = "="
+        self.przycisk10.grid(row=1,column=3,columnspan=2,rowspan=2,sticky=W)
+        self.przycisk10["command"]=self.Wykonaj
+        
+        self.przyciskkropka=Button(self.okno,width = 2,height=2)
+        self.przyciskkropka["text"] = "."
+        self.przyciskkropka.grid(row=4,column=0,sticky=W)
+        self.przyciskkropka["command"]=lambda:[self.Dziesietne(),self.Zanotuj(".")]
+       
+        self.przyciskznak=Button(self.okno,width = 2,height=2)
+        self.przyciskznak["text"] = "+/-"
+        self.przyciskznak.grid(row=4,column=2,sticky=W)
+        self.przyciskznak["command"]=self.ZmienZnak
+
+        self.przyciskznak1=Button(self.okno,width=2,height=2)
+        self.przyciskznak1["text"] = "+"
+        self.przyciskznak1.grid(row=3,column=3,sticky=W)
+        self.przyciskznak1["command"]=lambda: self.Akcja(1)
+
+        self.przyciskznak2=Button(self.okno,width=2,height=2)
+        self.przyciskznak2["text"] = "-"
+        self.przyciskznak2.grid(row=3,column=4,sticky=W)
+        self.przyciskznak2["command"]=lambda: self.Akcja(2)
+
+        self.przyciskznak3=Button(self.okno,width=2,height=2)
+        self.przyciskznak3["text"] = "*"
+        self.przyciskznak3.grid(row=4,column=3,sticky=W)
+        self.przyciskznak3["command"]=lambda: self.Akcja(3)
+
+        self.przyciskznak4=Button(self.okno,width=2,height=2)
+        self.przyciskznak4["text"] = "/"
+        self.przyciskznak4.grid(row=4,column=4,sticky=W)
+        self.przyciskznak4["command"]=lambda: self.Akcja(4)
+        
+
+        self.pole1=Entry(self.okno,width=10,font=("Calibri",18))
+        self.pole1.grid(row=0,column=0,columnspan=5,sticky=N)
+
+
+    def Zanotuj(self,a):
+        liczba=str(a)
+        napis=self.pole1.get()
+        napis=napis+liczba
+        self.pole1.delete(0,END)
+        self.pole1.insert(0,napis)
+    def ZmienZnak(self):
+        liczba=int(self.pole1.get())
+        print(liczba)
+        liczba=(-1)*liczba
+        print(liczba)
+        self.pole1.delete(0,END)
+        self.pole1.insert(0,liczba)
+    def Akcja(self,nr):
+        global liczba1
+        global akcja
+        akcja={"1":"+",
+               "2":"-",
+               "3":"*",
+               "4":"/"}
+        liczba1=float(self.pole1.get())
+        self.pole1.delete(0,END)
+        akcja=akcja[str(nr)]
+    def Wykonaj(self):
+        liczba2=float(self.pole1.get())
+        self.pole1.delete(0,END)
+        print("To liczba 1:",liczba1)
+        print("To liczba 2:",liczba2)
+        wynik=eval(str(liczba1)+akcja+str(liczba2))
+        self.pole1.insert(0,wynik)
+    def Dziesietne(self):
+       pass
+        
+a=Program()
